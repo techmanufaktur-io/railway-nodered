@@ -8,6 +8,3 @@ healthcheckTimeout = 300
 restartPolicyType = "on_failure"
 restartPolicyMaxRetries = 10
 
-[[mounts]]
-source = "node_red_data"
-destination = "/data"
