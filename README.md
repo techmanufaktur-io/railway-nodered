@@ -2,7 +2,7 @@
 
 Deploy Node-RED with persistent volume storage on Railway.
 
-[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/template/YOUR_TEMPLATE_ID)
+[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/new/template/nodered?utm_medium=integration&utm_source=button&utm_campaign=generic)
 
 ## Features
 
