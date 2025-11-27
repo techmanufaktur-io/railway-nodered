@@ -372,8 +372,8 @@ module.exports = {
   debugMaxLength: 1000,
   mqttReconnectTime: 15000,
   serialReconnectTime: 15000,
-  httpNodeAuth: {
+  httpNodeAuth: process.env.USER_PASSWORD ? {
     user: "user",
     pass: process.env.USER_PASSWORD,
-  },
+  } : undefined,
 };

@@ -14,16 +14,16 @@ Deploy Node-RED with AWS S3 storage backend on Railway.
 
 ## Environment Variables
 
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `ADMIN_PASSWORD` | Yes | Bcrypt hashed password for admin user |
-| `AWS_S3_BUCKET` | Yes | S3 bucket name for storing flows |
-| `AWS_ACCESS_KEY_ID` | Yes | AWS access key |
-| `AWS_SECRET_ACCESS_KEY` | Yes | AWS secret key |
-| `AWS_REGION` | No | AWS region (default: eu-west-1) |
-| `AWS_S3_APPNAME` | No | App name prefix in S3 (default: hostname) |
-| `USER_PASSWORD` | No | Password for HTTP node authentication |
-| `PORT` | No | Port to run on (default: 1880, Railway sets this automatically) |
+| Variable                | Required | Description                                                     |
+| ----------------------- | -------- | --------------------------------------------------------------- |
+| `ADMIN_PASSWORD`        | Yes      | Bcrypt hashed password for admin user                           |
+| `AWS_S3_BUCKET`         | Yes      | S3 bucket name for storing flows                                |
+| `AWS_ACCESS_KEY_ID`     | Yes      | AWS access key                                                  |
+| `AWS_SECRET_ACCESS_KEY` | Yes      | AWS secret key                                                  |
+| `AWS_REGION`            | No       | AWS region (default: eu-west-1)                                 |
+| `AWS_S3_APPNAME`        | No       | App name prefix in S3 (default: hostname)                       |
+| `USER_PASSWORD`         | No       | Password for HTTP node authentication                           |
+| `PORT`                  | No       | Port to run on (default: 1880, Railway sets this automatically) |
 
 ## Generating Admin Password
 
@@ -34,34 +34,6 @@ node -e "console.log(require('bcryptjs').hashSync('YOUR_PASSWORD', 8))"
 ```
 
 Or use an online bcrypt generator.
-
-## AWS S3 Setup
-
-1. Create an S3 bucket in your AWS account
-2. Create an IAM user with S3 access
-3. Add the following policy to the IAM user:
-
-```json
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Action": [
-        "s3:GetObject",
-        "s3:PutObject",
-        "s3:DeleteObject",
-        "s3:ListBucket",
-        "s3:CreateBucket"
-      ],
-      "Resource": [
-        "arn:aws:s3:::YOUR_BUCKET_NAME",
-        "arn:aws:s3:::YOUR_BUCKET_NAME/*"
-      ]
-    }
-  ]
-}
-```
 
 ## Local Development
 
