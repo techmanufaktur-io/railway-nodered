@@ -1,0 +1,27 @@
+{
+  "name": "railway-nodered",
+  "version": "1.0.0",
+  "description": "Node-RED on Railway with S3 storage backend",
+  "main": "index.js",
+  "scripts": {
+    "start": "node-red -s settings.js"
+  },
+  "keywords": [
+    "node-red",
+    "railway",
+    "iot",
+    "automation",
+    "s3"
+  ],
+  "author": "",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "node-red": "^4.0.5",
+    "aws-sdk": "^2.1692.0",
+    "when": "^3.7.8",
+    "bcryptjs": "^2.4.3"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

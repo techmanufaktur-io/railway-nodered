@@ -1,0 +1,61 @@
+[
+  {
+    "id": "welcome-flow",
+    "type": "tab",
+    "label": "Welcome",
+    "disabled": false,
+    "info": "Welcome to Node-RED on Railway!"
+  },
+  {
+    "id": "inject-welcome",
+    "type": "inject",
+    "z": "welcome-flow",
+    "name": "Start",
+    "props": [
+      {
+        "p": "payload"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "topic": "",
+    "payload": "Hello from Node-RED on Railway!",
+    "payloadType": "str",
+    "x": 150,
+    "y": 100,
+    "wires": [
+      [
+        "debug-welcome"
+      ]
+    ]
+  },
+  {
+    "id": "debug-welcome",
+    "type": "debug",
+    "z": "welcome-flow",
+    "name": "Output",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "payload",
+    "targetType": "msg",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 350,
+    "y": 100,
+    "wires": []
+  },
+  {
+    "id": "comment-welcome",
+    "type": "comment",
+    "z": "welcome-flow",
+    "name": "Welcome to Node-RED on Railway",
+    "info": "This is your Node-RED instance running on Railway.\n\nYour flows are stored in AWS S3 for persistence.\n\nClick the inject node on the left and check the debug sidebar to see output.\n\nHappy automating!",
+    "x": 230,
+    "y": 40,
+    "wires": []
+  }
+]

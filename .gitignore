@@ -1,0 +1,25 @@
+node_modules/
+.npm
+*.log
+npm-debug.log*
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Node-RED local files
+flows_cred.json
+.config.json
+.config.runtime.json
+.config.users.json
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
