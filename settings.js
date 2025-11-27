@@ -296,6 +296,7 @@ var s3storage = {
 };
 
 module.exports = {
+  userDir: "/data",
   awsRegion: process.env.AWS_REGION,
   awsS3Appname: process.env.AWS_S3_APPNAME,
   awsS3Bucket: process.env.AWS_S3_BUCKET,
@@ -306,23 +307,23 @@ module.exports = {
   uiPort: process.env.PORT || 1880,
   adminAuth: {
     type: "credentials",
-    users: function(username) {
-      return new Promise(function(resolve) {
+    users: function (username) {
+      return new Promise(function (resolve) {
         if (username === "admin") {
           resolve({
             username: "admin",
             password: process.env.ADMIN_PASSWORD,
-            permissions: "*"
+            permissions: "*",
           });
         } else {
           resolve(null);
         }
       });
     },
-    authenticate: function(username, password) {
-      return new Promise(function(resolve) {
+    authenticate: function (username, password) {
+      return new Promise(function (resolve) {
         if (username === "admin") {
-          bcrypt.compare(password, adminPasswordHash, function(err, result) {
+          bcrypt.compare(password, adminPasswordHash, function (err, result) {
             if (result) {
               resolve({ username: "admin", permissions: "*" });
             } else {
@@ -333,7 +334,7 @@ module.exports = {
           resolve(null);
         }
       });
-    }
+    },
   },
   diagnostics: {
     enabled: true,
@@ -377,8 +378,10 @@ module.exports = {
   debugMaxLength: 1000,
   mqttReconnectTime: 15000,
   serialReconnectTime: 15000,
-  httpNodeAuth: process.env.USER_PASSWORD ? {
-    user: "user",
-    pass: process.env.USER_PASSWORD,
-  } : undefined,
+  httpNodeAuth: process.env.USER_PASSWORD
+    ? {
+        user: "user",
+        pass: process.env.USER_PASSWORD,
+      }
+    : undefined,
 };

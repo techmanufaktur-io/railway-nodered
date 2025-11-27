@@ -1,13 +1,13 @@
 # Node-RED on Railway
 
-Deploy Node-RED with AWS S3 storage backend on Railway.
+Deploy Node-RED with S3-compatible storage backend on Railway.
 
 [![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/template/YOUR_TEMPLATE_ID)
 
 ## Features
 
 - Node-RED 4.x with Monaco code editor
-- Persistent flow storage using AWS S3
+- Persistent flow storage using S3-compatible storage (AWS S3 or Railway Object Storage)
 - Admin authentication enabled
 - HTTP node authentication
 - Markdown editor with Mermaid diagrams
@@ -16,24 +16,26 @@ Deploy Node-RED with AWS S3 storage backend on Railway.
 
 | Variable                | Required | Description                                                     |
 | ----------------------- | -------- | --------------------------------------------------------------- |
-| `ADMIN_PASSWORD`        | Yes      | Bcrypt hashed password for admin user                           |
+| `ADMIN_PASSWORD`        | Yes      | Plain text password for admin user (hashed at startup)          |
 | `AWS_S3_BUCKET`         | Yes      | S3 bucket name for storing flows                                |
-| `AWS_ACCESS_KEY_ID`     | Yes      | AWS access key                                                  |
-| `AWS_SECRET_ACCESS_KEY` | Yes      | AWS secret key                                                  |
-| `AWS_REGION`            | No       | AWS region (default: eu-west-1)                                 |
+| `AWS_S3_ENDPOINT`       | Yes      | S3 endpoint URL (e.g., `https://b1.eu-central-1.storage.railway.app` for Railway Object Storage) |
+| `AWS_ACCESS_KEY_ID`     | Yes      | S3 access key                                                   |
+| `AWS_SECRET_ACCESS_KEY` | Yes      | S3 secret key                                                   |
+| `AWS_REGION`            | No       | S3 region (default: eu-west-1)                                  |
 | `AWS_S3_APPNAME`        | No       | App name prefix in S3 (default: hostname)                       |
-| `USER_PASSWORD`         | No       | Password for HTTP node authentication                           |
+| `USER_PASSWORD`         | No       | Password for HTTP node authentication (user: "user")            |
 | `PORT`                  | No       | Port to run on (default: 1880, Railway sets this automatically) |
 
-## Generating Admin Password
+## Using Railway Object Storage
 
-The admin password must be bcrypt hashed. Generate one using:
-
-```bash
-node -e "console.log(require('bcryptjs').hashSync('YOUR_PASSWORD', 8))"
-```
-
-Or use an online bcrypt generator.
+1. Add Object Storage to your Railway project
+2. Copy the credentials from the Object Storage service
+3. Set the environment variables in your Node-RED service:
+   - `AWS_S3_ENDPOINT` = Endpoint URL from Railway
+   - `AWS_S3_BUCKET` = Bucket Name from Railway
+   - `AWS_ACCESS_KEY_ID` = Access Key ID from Railway
+   - `AWS_SECRET_ACCESS_KEY` = Secret Access Key from Railway
+   - `AWS_REGION` = Region from Railway (e.g., `eu-central-1`)
 
 ## Local Development
 

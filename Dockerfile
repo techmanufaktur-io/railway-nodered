@@ -24,6 +24,11 @@ EXPOSE 1880
 # Run as non-root user for security
 RUN addgroup -S nodered && adduser -S nodered -G nodered
 RUN chown -R nodered:nodered /app /data
+
+# Initialize package.json in /data for palette manager installs
+RUN echo '{"name":"node-red-user-modules","version":"1.0.0"}' > /data/package.json && \
+    chown nodered:nodered /data/package.json
+
 USER nodered
 
 # Start Node-RED
