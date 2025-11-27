@@ -2,8 +2,8 @@ FROM node:20-alpine
 
 WORKDIR /app
 
-# Install build dependencies for native modules
-RUN apk add --no-cache python3 make g++
+# Install build dependencies for native modules and su-exec for entrypoint
+RUN apk add --no-cache python3 make g++ su-exec
 
 # Copy package files
 COPY package*.json ./
@@ -25,11 +25,9 @@ EXPOSE 1880
 RUN addgroup -S nodered && adduser -S nodered -G nodered
 RUN chown -R nodered:nodered /app /data
 
-# Initialize package.json in /data for palette manager installs
-RUN echo '{"name":"node-red-user-modules","version":"1.0.0"}' > /data/package.json && \
-    chown nodered:nodered /data/package.json
+# Copy entrypoint script
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
-USER nodered
-
-# Start Node-RED
-CMD ["npm", "start"]
+# Start via entrypoint (runs as root, then drops to nodered user)
+ENTRYPOINT ["/entrypoint.sh"]
