@@ -5,7 +5,7 @@ Node-RED is a flow-based programming tool for wiring together hardware devices, 
 ## Installation / Deployment
 
 1. Click on "Deploy Now"
-2. Set the `ADMIN_PASSWORD` variable
+2. Set the `ADMIN_PASSWORD` variable (default is "password"; username is "admin")
 3. Wait a few minutes
 4. Click on the railway-nodered service > Settings > Networing > Click "Generate Domain"
 5. Wait a few minutes (even if the service is active)
@@ -15,7 +15,7 @@ Node-RED is a flow-based programming tool for wiring together hardware devices, 
 
 ## About Hosting Node-RED
 
-Hosting Node-RED requires persistent storage for flows, credentials, and settings since the editor allows users to modify flows at runtime. This template uses S3-compatible object storage (Railway Object Storage) to persist all Node-RED data, ensuring your flows survive container restarts and redeployments. Authentication is configured out of the box with admin credentials, protecting your Node-RED editor from unauthorized access.
+Hosting Node-RED requires persistent storage for flows, credentials, and settings since the editor allows users to modify flows at runtime. This template uses a Railway Volume to persist all Node-RED data, ensuring your flows survive container restarts and redeployments. Authentication is configured out of the box with admin credentials, protecting your Node-RED editor from unauthorized access.
 
 ## Common Use Cases
 
@@ -27,32 +27,26 @@ Hosting Node-RED requires persistent storage for flows, credentials, and setting
 
 ## Dependencies for Node-RED Hosting
 
-- Railway Object Storage (S3-compatible) for persistent flow storage
+- Railway Volume for persistent flow storage
 - Node.js 20+ runtime environment
 
 ### Deployment Dependencies
 
 - [Node-RED Documentation](https://nodered.org/docs/)
-- [Railway Object Storage Guide](https://docs.railway.com/reference/object-storage)
-- [AWS SDK for JavaScript](https://docs.aws.amazon.com/sdk-for-javascript/)
+- [Railway Volumes Guide](https://docs.railway.com/reference/volumes)
 
 ### Implementation Details
 
-The template configures a custom S3 storage module for Node-RED that persists:
+The template uses a Railway Volume mounted at `/data` to persist:
 
-- `flow.json` - Your Node-RED flows
-- `credential.json` - Encrypted node credentials
-- `settings.json` - Editor settings
+- `flows.json` - Your Node-RED flows
+- `flows_cred.json` - Encrypted node credentials
+- `.config.*.json` - Editor settings
 
-Environment variables connect to Railway Object Storage:
+Environment variables:
 
 ```
 ADMIN_PASSWORD=your-admin-password
-AWS_S3_ENDPOINT=your-endpoint
-AWS_S3_BUCKET=your-bucket-name
-AWS_ACCESS_KEY_ID=your-access-key
-AWS_SECRET_ACCESS_KEY=your-secret-key
-AWS_REGION=your-region
 ```
 
 ## Why Deploy Node-RED on Railway?

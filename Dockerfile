@@ -13,7 +13,6 @@ RUN npm install --production
 
 # Copy application files
 COPY settings.js ./
-COPY defaults/ ./defaults/
 
 # Create data directory
 RUN mkdir -p /data
