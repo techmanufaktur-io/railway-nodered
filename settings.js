@@ -3,6 +3,7 @@ if (!process.env.ADMIN_PASSWORD) {
 }
 
 var bcrypt = require("bcryptjs");
+var adminPasswordHash = bcrypt.hashSync(process.env.ADMIN_PASSWORD, 8);
 
 /**
  * Copyright 2014 IBM Corp.
@@ -86,7 +87,10 @@ var s3storage = {
     AWS.config.region = settings.awsRegion || "eu-west-1";
 
     return when.promise(function (resolve, reject) {
-      s3 = new AWS.S3();
+      s3 = new AWS.S3({
+        endpoint: settings.awsS3Endpoint,
+        s3ForcePathStyle: true,
+      });
       if (!s3BucketName) {
         s3BucketName = data.Owner.DisplayName + "-node-red";
       }
@@ -295,6 +299,7 @@ module.exports = {
   awsRegion: process.env.AWS_REGION,
   awsS3Appname: process.env.AWS_S3_APPNAME,
   awsS3Bucket: process.env.AWS_S3_BUCKET,
+  awsS3Endpoint: process.env.AWS_S3_ENDPOINT,
   storageModule: s3storage,
   flowFile: "flows.json",
   flowFilePretty: true,
@@ -317,7 +322,7 @@ module.exports = {
     authenticate: function(username, password) {
       return new Promise(function(resolve) {
         if (username === "admin") {
-          bcrypt.compare(password, process.env.ADMIN_PASSWORD, function(err, result) {
+          bcrypt.compare(password, adminPasswordHash, function(err, result) {
             if (result) {
               resolve({ username: "admin", permissions: "*" });
             } else {
